@@ -4,6 +4,7 @@ use std::path::Path;
 
 use regex::Regex;
 
+// Next time i could just use unzip and flatmap to do this faster
 fn create_lists<P>(filename: P) -> (Vec<u32>, Vec<u32>)
 	where P: AsRef<Path>,
 {
@@ -26,7 +27,7 @@ fn create_lists<P>(filename: P) -> (Vec<u32>, Vec<u32>)
 	(left, right)
 }
 
-fn process_input<P>(filename: P) 
+fn process_input<P>(filename: P)
 	where P: AsRef<Path>,
 {
 	let (mut l, mut r) = create_lists(filename);
