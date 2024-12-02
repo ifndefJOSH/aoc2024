@@ -27,9 +27,10 @@ fn create_lists<P>(filename: P) -> (Vec<u32>, Vec<u32>)
 	(left, right)
 }
 
-fn process_input<P>(filename: P)
+pub fn process_input<P>(filename: P)
 	where P: AsRef<Path>,
 {
+	println!("=========== DAY 1 ===========");
 	let (mut l, mut r) = create_lists(filename);
 	l.sort();
 	r.sort();
@@ -46,8 +47,3 @@ fn process_input<P>(filename: P)
 
 }
 
-fn main() {
-	std::env::args().skip(1).for_each(|f| {
-		process_input(f);
-	});
-}
