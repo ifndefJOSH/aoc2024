@@ -24,7 +24,7 @@ fn parse_input<P>(filename: P) -> Vec<Vec<u32>>
 	}).collect::<Vec<Vec<u32>>>()
 }
 
-fn safe(level: Vec<u32>) -> bool {
+fn safe(level: &Vec<u32>) -> bool {
 	if level.len() == 0 {
 		return true;
 	}
@@ -37,7 +37,7 @@ fn safe(level: Vec<u32>) -> bool {
 			if *cur > last { Ok(*cur) } else { Err(*cur) }
 		).is_ok();
 	if increasing {
-		println!("{:?} is increasing {}", level, diffs_ok);
+		// println!("{:?} is increasing {}", level, diffs_ok);
 		return diffs_ok;
 	}
 	let decreasing = level.iter()
@@ -45,10 +45,25 @@ fn safe(level: Vec<u32>) -> bool {
 			if *cur < last { Ok(*cur) } else { Err(*cur) }
 		).is_ok();
 	if decreasing {
-		println!("{:?} is decreasing {}", level, diffs_ok);
+		// println!("{:?} is decreasing {}", level, diffs_ok);
 		return diffs_ok;
 	}
 	false
+}
+
+fn safe_pt2(level: &Vec<u32>) -> bool {
+	let s = safe(&level);
+	if s {
+		return true;
+	}
+	for i in 0..level.len() {
+		let mut l_copy = level.clone();
+		l_copy.remove(i);
+		if safe(&l_copy) {
+			return true;
+		}
+	}
+	return false;
 }
 
 pub fn process_input<P>(filename: P)
@@ -57,6 +72,8 @@ pub fn process_input<P>(filename: P)
 	println!("========= DAY 2 ==============");
 	let reports = parse_input(filename);
 	// Part 1
-	let part1_ans = reports.iter().filter(|report| safe(report.to_vec())).count();
+	let part1_ans = reports.iter().filter(|report| safe(&report.to_vec())).count();
 	println!("The answer for part 1 is {part1_ans}");
+	let part2_ans = reports.iter().filter(|report| safe_pt2(&report.to_vec())).count();
+	println!("The answer for part 2 is {part2_ans}");
 }
