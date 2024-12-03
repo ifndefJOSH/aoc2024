@@ -2,6 +2,7 @@ use clap::Parser;
 
 mod day1;
 mod day2;
+mod day3;
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -18,6 +19,7 @@ fn main() {
 	match cli.day {
 	    1 => day1::process_input(cli.input_file),
 		2 => day2::process_input(cli.input_file),
+		3 => day3::process_input(cli.input_file),
 	    _ => panic!("Day not implemented yet!"),
 	}
 }
