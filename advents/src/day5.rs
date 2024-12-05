@@ -47,6 +47,21 @@ fn satisfies_order(order: &Vec<u16>, update: &Vec<u16>) -> Option<bool> {
 	Some(true)
 }
 
+fn swap_order(order: &[u16], update: &mut [u16]) {
+	assert!(order.len() == 2);
+	for i in 1..update.len() {
+		if update[i] == order[0] {
+			for j in 0..i {
+				if update[j] == order[1] {
+					// Swap update[i] and update[j]
+					update.swap(i, j);
+				}
+			}
+		}
+	}
+}
+
+
 pub fn process_input<P>(filename: P)
 	where P: AsRef<Path>,
 {
@@ -63,4 +78,22 @@ pub fn process_input<P>(filename: P)
 		succeeding_update[succeeding_update.len() / 2]
 	}).sum();
 	println!("Part 1 answer is {part1_ans}");
+	let part2_ans: u16 = updates.iter().filter(|update| {
+		// only get the failing ones
+		ordering_rules.iter()
+			.try_fold(true, |_, order| satisfies_order(order, update)).is_none()
+	})
+	.map(|failing_update| {
+		let mut modified_update = failing_update.clone();
+		while ordering_rules.iter()
+			.try_fold(true, |_, order| satisfies_order(order, &modified_update)).is_none() {
+			for rule in ordering_rules.clone() {
+				swap_order(&rule, &mut modified_update);
+			}
+		}
+		assert!(ordering_rules.iter()
+			.try_fold(true, |_, order| satisfies_order(order, &modified_update)).is_some());
+		modified_update[modified_update.len() / 2]
+	}).sum();
+	println!("Part 2 answer is {part2_ans}");
 }
