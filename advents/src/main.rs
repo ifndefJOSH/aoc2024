@@ -5,6 +5,7 @@ mod day2;
 mod day3;
 mod day4;
 mod day5;
+mod day6;
 
 #[derive(Parser)]
 #[command(version, about, long_about = None)]
@@ -24,6 +25,7 @@ fn main() {
 		3 => day3::process_input(cli.input_file),
 		4 => day4::process_input(cli.input_file),
 		5 => day5::process_input(cli.input_file),
+		6 => day6::process_input(cli.input_file),
 	    _ => panic!("Day not implemented yet!"),
 	}
 }
