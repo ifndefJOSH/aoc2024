@@ -125,7 +125,7 @@ fn creates_loop(grid: &mut Vec<Vec<RichGridSquare>>, init_pos: (i32, i32)) -> bo
 pub fn process_input<P>(filename: P)
 	where P: AsRef<Path>,
 {
-	println!("========= DAY 5 ==============");
+	println!("========= DAY 6 ==============");
 	// Part 1
 	let (mut grid, (mut row, mut col)) = parse_input(filename);
 	let init_grid = grid.clone();
@@ -159,7 +159,7 @@ pub fn process_input<P>(filename: P)
 		(0..cur_row.len()).filter(|c| {
 			if r == (init_pos.0 - 1) as usize && *c == init_pos.1 as usize {
 				false
-			} else if cur_row[*c] == GridSquare::Unvisited {
+			} else if cur_row[*c] == GridSquare::Unvisited && grid[r][*c] == GridSquare::Visited {
 				let mut grid_cpy = grid.iter().map(|rw| {
 					rw.iter().map(|sq| {
 						match sq {
